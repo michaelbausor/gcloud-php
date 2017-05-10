@@ -35,13 +35,6 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\LongRunning\OperationsClient;
 use Google\GAX\OperationResponse;
-use google\cloud\speech\v1\LongRunningRecognizeRequest;
-use google\cloud\speech\v1\LongRunningRecognizeResponse;
-use google\cloud\speech\v1\RecognitionAudio;
-use google\cloud\speech\v1\RecognitionConfig;
-use google\cloud\speech\v1\RecognizeRequest;
-use google\cloud\speech\v1\SpeechGrpcClient;
-use google\cloud\speech\v1\StreamingRecognizeRequest;
 
 /**
  * Service Description: Service that implements Google Cloud Speech API.

@@ -35,13 +35,6 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\LongRunning\OperationsClient;
 use Google\GAX\OperationResponse;
-use google\cloud\speech\v1beta1\AsyncRecognizeRequest;
-use google\cloud\speech\v1beta1\AsyncRecognizeResponse;
-use google\cloud\speech\v1beta1\RecognitionAudio;
-use google\cloud\speech\v1beta1\RecognitionConfig;
-use google\cloud\speech\v1beta1\SpeechGrpcClient;
-use google\cloud\speech\v1beta1\StreamingRecognizeRequest;
-use google\cloud\speech\v1beta1\SyncRecognizeRequest;
 
 /**
  * Service Description: Service that implements Google Cloud Speech API.
@@ -289,7 +282,7 @@ class SpeechClient
     }
 
     /**
-     * Perform synchronous speech-recognition: receive results after all audio
+     * Performs synchronous speech recognition: receive results after all audio
      * has been sent and processed.
      *
      * Sample code:
@@ -310,9 +303,9 @@ class SpeechClient
      * }
      * ```
      *
-     * @param RecognitionConfig $config       [Required] The `config` message provides information to the recognizer
-     *                                        that specifies how to process the request.
-     * @param RecognitionAudio  $audio        [Required] The audio data to be recognized.
+     * @param RecognitionConfig $config       &#42;Required&#42; Provides information to the recognizer that specifies how to
+     *                                        process the request.
+     * @param RecognitionAudio  $audio        &#42;Required&#42; The audio data to be recognized.
      * @param array             $optionalArgs {
      *                                        Optional.
      *
@@ -351,8 +344,10 @@ class SpeechClient
     }
 
     /**
-     * Perform asynchronous speech-recognition: receive results via the
-     * google.longrunning.Operations interface. Returns either an
+     * Performs asynchronous speech recognition: receive results via the
+     * [google.longrunning.Operations]
+     * (/speech/reference/rest/v1beta1/operations#Operation)
+     * interface. Returns either an
      * `Operation.error` or an `Operation.response` which contains
      * an `AsyncRecognizeResponse` message.
      *
@@ -399,9 +394,9 @@ class SpeechClient
      * }
      * ```
      *
-     * @param RecognitionConfig $config       [Required] The `config` message provides information to the recognizer
-     *                                        that specifies how to process the request.
-     * @param RecognitionAudio  $audio        [Required] The audio data to be recognized.
+     * @param RecognitionConfig $config       &#42;Required&#42; Provides information to the recognizer that specifies how to
+     *                                        process the request.
+     * @param RecognitionAudio  $audio        &#42;Required&#42; The audio data to be recognized.
      * @param array             $optionalArgs {
      *                                        Optional.
      *
@@ -440,7 +435,7 @@ class SpeechClient
     }
 
     /**
-     * Perform bidirectional streaming speech-recognition: receive results while
+     * Performs bidirectional streaming speech recognition: receive results while
      * sending audio. This method is only available via the gRPC API (not REST).
      *
      * Sample code:

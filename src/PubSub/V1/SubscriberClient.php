@@ -35,30 +35,30 @@ use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PageStreamingDescriptor;
 use Google\GAX\PathTemplate;
-use google\iam\v1\GetIamPolicyRequest;
-use google\iam\v1\IAMPolicyGrpcClient;
-use google\iam\v1\Policy;
-use google\iam\v1\SetIamPolicyRequest;
-use google\iam\v1\TestIamPermissionsRequest;
-use google\protobuf\Duration;
-use google\protobuf\FieldMask;
-use google\protobuf\Timestamp;
-use google\pubsub\v1\AcknowledgeRequest;
-use google\pubsub\v1\CreateSnapshotRequest;
-use google\pubsub\v1\DeleteSnapshotRequest;
-use google\pubsub\v1\DeleteSubscriptionRequest;
-use google\pubsub\v1\GetSubscriptionRequest;
-use google\pubsub\v1\ListSnapshotsRequest;
-use google\pubsub\v1\ListSubscriptionsRequest;
-use google\pubsub\v1\ModifyAckDeadlineRequest;
-use google\pubsub\v1\ModifyPushConfigRequest;
-use google\pubsub\v1\PullRequest;
-use google\pubsub\v1\PushConfig;
-use google\pubsub\v1\SeekRequest;
-use google\pubsub\v1\StreamingPullRequest;
-use google\pubsub\v1\SubscriberGrpcClient;
-use google\pubsub\v1\Subscription;
-use google\pubsub\v1\UpdateSubscriptionRequest;
+use Google\Iam\V1\GetIamPolicyRequest;
+use Google\Iam\V1\IAMPolicyGrpcClient;
+use Google\Iam\V1\Policy;
+use Google\Iam\V1\SetIamPolicyRequest;
+use Google\Iam\V1\TestIamPermissionsRequest;
+use Google\Protobuf\Duration;
+use Google\Protobuf\FieldMask;
+use Google\Protobuf\Timestamp;
+use Google\Pubsub\V1\AcknowledgeRequest;
+use Google\Pubsub\V1\CreateSnapshotRequest;
+use Google\Pubsub\V1\DeleteSnapshotRequest;
+use Google\Pubsub\V1\DeleteSubscriptionRequest;
+use Google\Pubsub\V1\GetSubscriptionRequest;
+use Google\Pubsub\V1\ListSnapshotsRequest;
+use Google\Pubsub\V1\ListSubscriptionsRequest;
+use Google\Pubsub\V1\ModifyAckDeadlineRequest;
+use Google\Pubsub\V1\ModifyPushConfigRequest;
+use Google\Pubsub\V1\PullRequest;
+use Google\Pubsub\V1\PushConfig;
+use Google\Pubsub\V1\SeekRequest;
+use Google\Pubsub\V1\StreamingPullRequest;
+use Google\Pubsub\V1\SubscriberGrpcClient;
+use Google\Pubsub\V1\Subscription;
+use Google\Pubsub\V1\UpdateSubscriptionRequest;
 
 /**
  * Service Description: The service that an application uses to manipulate subscriptions and to
@@ -276,17 +276,21 @@ class SubscriberClient
     {
         $listSubscriptionsPageStreamingDescriptor =
                 new PageStreamingDescriptor([
-                    'requestPageTokenField' => 'page_token',
-                    'requestPageSizeField' => 'page_size',
-                    'responsePageTokenField' => 'next_page_token',
-                    'resourceField' => 'subscriptions',
+                    'requestPageTokenGetMethod' => 'getPageToken',
+                    'requestPageTokenSetMethod' => 'setPageToken',
+                    'requestPageSizeGetMethod' => 'getPageSize',
+                    'requestPageSizeSetMethod' => 'setPageSize',
+                    'responsePageTokenGetMethod' => 'getNextPageToken',
+                    'resourcesGetMethod' => 'getSubscriptions',
                 ]);
         $listSnapshotsPageStreamingDescriptor =
                 new PageStreamingDescriptor([
-                    'requestPageTokenField' => 'page_token',
-                    'requestPageSizeField' => 'page_size',
-                    'responsePageTokenField' => 'next_page_token',
-                    'resourceField' => 'snapshots',
+                    'requestPageTokenGetMethod' => 'getPageToken',
+                    'requestPageTokenSetMethod' => 'setPageToken',
+                    'requestPageSizeGetMethod' => 'getPageSize',
+                    'requestPageSizeSetMethod' => 'setPageSize',
+                    'responsePageTokenGetMethod' => 'getNextPageToken',
+                    'resourcesGetMethod' => 'getSnapshots',
                 ]);
 
         $pageStreamingDescriptors = [
@@ -302,7 +306,7 @@ class SubscriberClient
         return [
             'streamingPull' => [
                 'grpcStreamingType' => 'BidiStreaming',
-                'resourcesField' => 'getReceivedMessagesList',
+                'resourcesField' => 'getReceivedMessages',
             ],
         ];
     }
@@ -854,9 +858,7 @@ class SubscriberClient
     {
         $request = new ModifyAckDeadlineRequest();
         $request->setSubscription($subscription);
-        foreach ($ackIds as $elem) {
-            $request->addAckIds($elem);
-        }
+        $request->setAckIds($ackIds);
         $request->setAckDeadlineSeconds($ackDeadlineSeconds);
 
         $mergedSettings = $this->defaultCallSettings['modifyAckDeadline']->merge(
@@ -917,9 +919,7 @@ class SubscriberClient
     {
         $request = new AcknowledgeRequest();
         $request->setSubscription($subscription);
-        foreach ($ackIds as $elem) {
-            $request->addAckIds($elem);
-        }
+        $request->setAckIds($ackIds);
 
         $mergedSettings = $this->defaultCallSettings['acknowledge']->merge(
             new CallSettings($optionalArgs)
@@ -1591,9 +1591,7 @@ class SubscriberClient
     {
         $request = new TestIamPermissionsRequest();
         $request->setResource($resource);
-        foreach ($permissions as $elem) {
-            $request->addPermissions($elem);
-        }
+        $request->setPermissions($permissions);
 
         $mergedSettings = $this->defaultCallSettings['testIamPermissions']->merge(
             new CallSettings($optionalArgs)

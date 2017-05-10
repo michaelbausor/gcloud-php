@@ -34,9 +34,9 @@ use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PathTemplate;
-use google\devtools\clouderrorreporting\v1beta1\ReportErrorEventRequest;
-use google\devtools\clouderrorreporting\v1beta1\ReportErrorsServiceGrpcClient;
-use google\devtools\clouderrorreporting\v1beta1\ReportedErrorEvent;
+use Google\Devtools\Clouderrorreporting\V1beta1\ReportErrorEventRequest;
+use Google\Devtools\Clouderrorreporting\V1beta1\ReportErrorsServiceGrpcClient;
+use Google\Devtools\Clouderrorreporting\V1beta1\ReportedErrorEvent;
 
 /**
  * Service Description: An API for reporting error events.

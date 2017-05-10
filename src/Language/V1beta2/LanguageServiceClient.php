@@ -33,15 +33,7 @@ use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
-use google\cloud\language\v1beta2\AnalyzeEntitiesRequest;
-use google\cloud\language\v1beta2\AnalyzeEntitySentimentRequest;
-use google\cloud\language\v1beta2\AnalyzeSentimentRequest;
-use google\cloud\language\v1beta2\AnalyzeSyntaxRequest;
-use google\cloud\language\v1beta2\AnnotateTextRequest;
-use google\cloud\language\v1beta2\AnnotateTextRequest\Features;
-use google\cloud\language\v1beta2\Document;
-use google\cloud\language\v1beta2\EncodingType;
-use google\cloud\language\v1beta2\LanguageServiceGrpcClient;
+use Google\Cloud\Language\V1beta2\AnnotateTextRequest_Features as Features;
 
 /**
  * Service Description: Provides text analysis operations such as sentiment analysis and entity
@@ -223,8 +215,7 @@ class LanguageServiceClient
      * }
      * ```
      *
-     * @param Document $document     Input document. Currently, `analyzeSentiment` only supports English text
-     *                               ([Document.language][google.cloud.language.v1beta2.Document.language]="EN").
+     * @param Document $document     Input document.
      * @param array    $optionalArgs {
      *                               Optional.
      *

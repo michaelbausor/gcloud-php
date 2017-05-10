@@ -104,6 +104,7 @@ trait GrpcTrait
      */
     private function formatLabelsForApi(array $labels)
     {
+        return $labels;
         $fLabels = [];
 
         foreach ($labels as $key => $value) {
@@ -127,13 +128,41 @@ trait GrpcTrait
         $fFields = [];
 
         foreach ($fields as $key => $value) {
-            $fFields[] = [
-                'key' => $key,
-                'value' => $this->formatValueForApi($value)
-            ];
+            $fFields[$key] = $this->formatValueForApi($value);
         }
 
         return ['fields' => $fFields];
+    }
+
+    private function unpackStructFromApi(array $struct) {
+        $vals = [];
+        foreach ($struct['fields'] as $key => $val) {
+            $vals[$key] = $this->unpackValue($val);
+        }
+        return $vals;
+    }
+
+    private function unpackValue($value)
+    {
+        if (count($value) > 1) {
+            throw new \RuntimeException("Unexpected fields in struct: $value");
+        }
+
+        foreach ($value as $setField => $setValue) {
+            switch ($setField)
+            {
+                case 'listValue':
+                    $valueList = [];
+                    foreach ($setValue['values'] as $innerValue) {
+                        $valueList[] = $this->unpackValue($innerValue);
+                    }
+                    return $valueList;
+                case 'structValue':
+                    return $this->unpackStructFromApi($setValue['structValue']);
+                default:
+                    return $setValue;
+            }
+        }
     }
 
     /**

@@ -34,10 +34,10 @@ use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
 use Google\GAX\PathTemplate;
-use google\devtools\clouderrorreporting\v1beta1\ErrorGroup;
-use google\devtools\clouderrorreporting\v1beta1\ErrorGroupServiceGrpcClient;
-use google\devtools\clouderrorreporting\v1beta1\GetGroupRequest;
-use google\devtools\clouderrorreporting\v1beta1\UpdateGroupRequest;
+use Google\Devtools\Clouderrorreporting\V1beta1\ErrorGroup;
+use Google\Devtools\Clouderrorreporting\V1beta1\ErrorGroupServiceGrpcClient;
+use Google\Devtools\Clouderrorreporting\V1beta1\GetGroupRequest;
+use Google\Devtools\Clouderrorreporting\V1beta1\UpdateGroupRequest;
 
 /**
  * Service Description: Service for retrieving and updating individual error groups.

@@ -33,9 +33,6 @@ use Google\GAX\ApiCallable;
 use Google\GAX\CallSettings;
 use Google\GAX\GrpcConstants;
 use Google\GAX\GrpcCredentialsHelper;
-use google\cloud\vision\v1\AnnotateImageRequest;
-use google\cloud\vision\v1\BatchAnnotateImagesRequest;
-use google\cloud\vision\v1\ImageAnnotatorGrpcClient;
 
 /**
  * Service Description: Service that performs Google Cloud Vision API detection tasks over client
@@ -233,9 +230,7 @@ class ImageAnnotatorClient
     public function batchAnnotateImages($requests, $optionalArgs = [])
     {
         $request = new BatchAnnotateImagesRequest();
-        foreach ($requests as $elem) {
-            $request->addRequests($elem);
-        }
+        $request->setRequests($requests);
 
         $mergedSettings = $this->defaultCallSettings['batchAnnotateImages']->merge(
             new CallSettings($optionalArgs)
