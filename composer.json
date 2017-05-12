@@ -55,12 +55,12 @@
         "league/json-guard": "^0.3",
         "erusev/parsedown": "^1.6",
         "vierbergenlars/php-semver": "^3.0",
-        "google/proto-client": "dev-proto3",
+        "google/proto-client-php": "dev-proto3",
         "google/gax": "dev-proto3"
     },
     "suggest": {
         "google/gax": "Required to support gRPC",
-        "google/proto-client": "Required to support gRPC"
+        "google/proto-client-php": "Required to support gRPC"
     },
     "autoload": {
         "psr-4": {
@@ -84,12 +84,5 @@
             "path": "src",
             "entry": "ServiceBuilder.php"
         }
-    },
-    "repositories": [{
-        "type": "vcs",
-        "url": "/usr/local/google/home/michaelbausor/dev/clean_generation/php_proto3/gax-php"
-    }, {
-        "type": "vcs",
-        "url": "/usr/local/google/home/michaelbausor/dev/clean_generation/php_proto3/proto-client-php"
-    }]
+    }
 }
