@@ -35,5 +35,19 @@ namespace Google\Cloud\Spanner\V1;
  */
 class SpannerClient extends SpannerGapicClient
 {
-    // This class is intentionally empty, and is intended to hold manual additions to the generated {@see SpannerClientImpl} class.
+    /**
+     * @return \Google\GAX\GrpcCredentialsHelper
+     */
+    public function getGrpcCredentialsHelper()
+    {
+        return $this->grpcCredentialsHelper;
+    }
+
+    /**
+     * @return \Google\Spanner\V1\SpannerGrpcClient
+     */
+    public function getGrpcStub()
+    {
+        return $this->spannerStub;
+    }
 }
