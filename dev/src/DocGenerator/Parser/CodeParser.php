@@ -22,6 +22,7 @@ use Google\Cloud\Dev\DocGenerator\ReflectorRegister;
 use Google\Cloud\Dev\GetComponentsTrait;
 use phpDocumentor\Reflection\ClassReflector;
 use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag\SeeTag;
 use phpDocumentor\Reflection\FileReflector;
 use phpDocumentor\Reflection\InterfaceReflector;
@@ -179,8 +180,12 @@ class CodeParser implements ParserInterface
 
     private function getPath($fileReflector)
     {
-        $fileSplit = explode($this->basePath, trim($fileReflector->getFileName(), '/'));
-        return 'src/' . trim($fileSplit[1], '/');
+        if (strpos($fileReflector->getFileName(), $this->basePath) !== false) {
+            $fileSplit = explode($this->basePath, trim($fileReflector->getFileName(), '/'));
+            return 'src/' . trim($fileSplit[1], '/');
+        } else {
+            return 'src/'. trim(explode('src', $fileReflector->getFileName())[1]);
+        }
     }
 
     private function buildDocument($fileReflector, $reflector)
@@ -212,11 +217,11 @@ class CodeParser implements ParserInterface
 
         if ($this->isInterface($reflector)) {
             $classInfo = $this->buildInterfaceInfo($fileReflector, $reflector);
-            $description = $this->buildInterfaceDescription($classInfo, $docBlock, $split['description']);
+            $description = $this->buildInterfaceDescription($classInfo, $docBlock, $split['description'], $reflector);
             $methods = $this->buildMethods($classInfo['interfaceMethods'], $fullName);
         } else {
             $classInfo = $this->buildInfo($fileReflector, $reflector);
-            $description = $this->buildClassDescription($classInfo, $docBlock, $split['description']);
+            $description = $this->buildClassDescription($classInfo, $docBlock, $split['description'], $reflector);
             $methods = $this->buildMethods($classInfo['methods'], $fullName);
         }
 
@@ -238,26 +243,26 @@ class CodeParser implements ParserInterface
                 !($reflector instanceof ClassReflector);
     }
 
-    private function buildDescription($docBlock, $content = null)
+    private function buildDescription($docBlock, $content = null, $reflector = null)
     {
-        return $this->markdown->parse($this->buildDescriptionContent($docBlock, $content));
+        return $this->markdown->parse($this->buildDescriptionContent($docBlock, $content, $reflector));
     }
 
-    private function buildClassDescription($classInfo, $docBlock, $content = null)
+    private function buildClassDescription($classInfo, $docBlock, $content = null, $reflector = null)
     {
-        $content = $this->buildDescriptionContent($docBlock, $content);
+        $content = $this->buildDescriptionContent($docBlock, $content, $reflector);
         $content .= $this->buildInheritDoc($classInfo);
         return $this->markdown->parse($content);
     }
 
-    private function buildInterfaceDescription($classInfo, $docBlock, $content = null)
+    private function buildInterfaceDescription($classInfo, $docBlock, $content = null, $reflector = null)
     {
-        $content = $this->buildDescriptionContent($docBlock, $content);
+        $content = $this->buildDescriptionContent($docBlock, $content, $reflector);
         $content .= $this->buildInterfaceInheritDoc($classInfo);
         return $this->markdown->parse($content);
     }
 
-    private function buildDescriptionContent($docBlock, $content = null)
+    private function buildDescriptionContent($docBlock, $content = null, $reflector = null)
     {
         if ($content === null) {
             $content = $docBlock->getText();
@@ -271,6 +276,28 @@ class CodeParser implements ParserInterface
             foreach ($parsedContents as &$part) {
                 if ($part instanceof SeeTag) {
                     $part = $this->buildReference($part->getReference(), $part);
+                } elseif ($this->isInheritDocTag($part)) {
+                    if ($reflector === null) {
+                        throw new \Exception(sprintf(
+                            "Inherit Doc tag ({@inheritdoc}) is only supported when \$reflector is not null.\nContext:\n%s",
+                            $content));
+                    }
+
+                    if (!($reflector instanceof ClassReflector)) {
+                        throw new \Exception(sprintf(
+                            "Inherit Doc tag ({@inheritdoc}) is not supported for reflector type %s (found in: %s)."
+                            . "\nContext:\n%s", get_class($reflector), $reflector->getName(), $content));
+                    }
+
+                    $parentClass = $reflector->getParentClass();
+                    if (empty($parentClass)) {
+                        throw new \Exception(sprintf('%s has {@inheritdoc} tag but no parent class', $reflector->getName()));
+                    }
+                    list($parentFileReflector, $parentReflector) = $this->register->getReflectors($parentClass);
+
+                    $parentDocBlock = $parentReflector->getDocBlock();
+                    $parentDocSplit = $this->splitDescription($parentDocBlock->getText());
+                    $part = $this->buildDescriptionContent($parentDocBlock, $parentDocSplit['description'], $parentReflector);
                 }
             }
 
@@ -279,6 +306,11 @@ class CodeParser implements ParserInterface
 
         $content = str_ireplace('[optional]', '', $content);
         return $content;
+    }
+
+    private function isInheritDocTag($tag)
+    {
+        return $tag instanceof Tag && ($tag->getName() == 'inheritDoc' || $tag->getName() == 'inheritdoc');
     }
 
     private function buildReference($reference, $default = null)
@@ -296,7 +328,7 @@ class CodeParser implements ParserInterface
     {
         $content = '';
         if (count($classInfo['parents']) > 0) {
-            $content .= $this->implodeInheritDocLinks(" > ", $classInfo['parents'], "Extends");
+            $content .= $this->implodeInheritDocLinks(" &raquo; ", $classInfo['parents'], "Extends");
         }
         if (count($classInfo['interfaces']) > 0) {
             $content .= $this->implodeInheritDocLinks(", ", $classInfo['interfaces'], "Implements");
@@ -376,7 +408,7 @@ class CodeParser implements ParserInterface
 
         $split = $this->splitDescription($fullDescription);
 
-        $description = $this->buildDescription($docBlock, $split['description']);
+        $description = $this->buildDescription($docBlock, $split['description'], $method);
         if ($methodInfo['container'] !== $className) {
             $description .= "\n\nImplemented in " . $this->buildReference($methodInfo['container']);
         }
@@ -418,7 +450,7 @@ class CodeParser implements ParserInterface
             'type' => $magicMethod->getMethodName() === '__construct' ? 'constructor' : 'instance',
             'name' => $magicMethod->getMethodName(),
             'source' => $this->getSource(),
-            'description' => $this->buildDescription($docBlock, $docText),
+            'description' => $this->buildDescription($docBlock, $docText, $magicMethod),
             'examples' => $this->buildExamples($examples),
             'resources' => $this->buildResources($resources),
             'params' => $this->buildParams($params),
@@ -503,7 +535,7 @@ class CodeParser implements ParserInterface
         foreach ($params as $param) {
             $description = $param->getDescription();
 
-            $descriptionString = $this->buildDescription($param->getDocBlock(), $description);
+            $descriptionString = $this->buildDescription($param->getDocBlock(), $description, $param);
             $nestedParamsArray = [];
 
             if (strpos($param->getType(), 'array') === 0 && $this->hasNestedParams($description)) {
@@ -513,7 +545,7 @@ class CodeParser implements ParserInterface
                 $nestedParamString = trim(array_shift($nestedParams));
                 $nestedParamsArray = $this->buildNestedParams($nestedParams, $param);
 
-                $descriptionString = $this->buildDescription($param->getDocBlock(), $nestedParamString);
+                $descriptionString = $this->buildDescription($param->getDocBlock(), $nestedParamString, $param);
             }
 
             $varName = substr($param->getVariableName(), 1);
@@ -555,7 +587,7 @@ class CodeParser implements ParserInterface
 
             $paramsArray[] = [
                 'name' => substr($origParam->getVariableName(), 1) . '.' . $name,
-                'description' => $this->buildDescription($origParam->getDocBlock(), $description),
+                'description' => $this->buildDescription($origParam->getDocBlock(), $description, $origParam),
                 'types' => $this->handleTypes($types),
                 'optional' => null, // @todo
                 'nullable' => null //@todo
@@ -612,7 +644,7 @@ class CodeParser implements ParserInterface
 
             $returnsArray[] = [
                 'types' => $this->handleTypes($return->getTypes(), $aliases),
-                'description' => $this->buildDescription(null, $return->getDescription())
+                'description' => $this->buildDescription(null, $return->getDescription(), $return)
             ];
         }
 
