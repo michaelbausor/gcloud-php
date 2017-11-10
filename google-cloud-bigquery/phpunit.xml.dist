@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/bootstrap-unit.php" colors="true">
+  <testsuites>
+    <testsuite>
+      <directory>tests/Google/Cloud/Tests/Unit</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist>
+      <directory suffix=".php">Google</directory>
+    </whitelist>
+  </filter>
+  <php>
+    <ini name="memory_limit" value="2048M"/>
+  </php>
+</phpunit>
