@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev\Snippet\Parser;
+namespace Google\Cloud\Tests\Snippet\Parser;
 
 /**
  * Represents a single code snippet

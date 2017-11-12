@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev\Snippet;
+namespace Google\Cloud\Tests\Snippet;
 
-use Google\Cloud\Dev\Snippet\Container;
+use Google\Cloud\Tests\Snippet\Container;
 use PHPUnit\Framework\TestCase;
 
 /**

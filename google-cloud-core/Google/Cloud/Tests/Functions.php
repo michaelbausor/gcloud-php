@@ -1,6 +1,6 @@
 <?php
 
-namespace Google\Cloud\Dev;
+namespace Google\Cloud\Tests;
 
 /**
  * Create a test stub which extends a real class and allows overriding of private properties.
@@ -16,7 +16,7 @@ function stub($extends, array $args = [], array $props = [])
         $props = ['connection'];
     }
 
-    $tpl = 'class %s extends %s {private $___props = \'%s\'; use \Google\Cloud\Dev\StubTrait; }';
+    $tpl = 'class %s extends %s {private $___props = \'%s\'; use \Google\Cloud\Tests\StubTrait; }';
 
     $name = 'Stub'. sha1($extends);
 

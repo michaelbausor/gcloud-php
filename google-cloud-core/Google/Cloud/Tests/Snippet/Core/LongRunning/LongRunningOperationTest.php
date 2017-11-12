@@ -19,7 +19,7 @@ namespace Google\Cloud\Tests\Snippets\Core\LongRunning;
 
 use Google\Cloud\Core\LongRunning\LongRunningConnectionInterface;
 use Google\Cloud\Core\LongRunning\LongRunningOperation;
-use Google\Cloud\Dev\Snippet\SnippetTestCase;
+use Google\Cloud\Tests\Snippet\SnippetTestCase;
 use Prophecy\Argument;
 
 /**
@@ -41,7 +41,7 @@ class LongRunningOperationTest extends SnippetTestCase
         $this->callables = [
             ['typeUrl' => self::TYPE, 'callable' => function($res) { return $res; }]
         ];
-        $this->operation = \Google\Cloud\Dev\stub(LongRunningOperation::class, [
+        $this->operation = \Google\Cloud\Tests\stub(LongRunningOperation::class, [
             $this->connection->reveal(),
             self::NAME,
             $this->callables

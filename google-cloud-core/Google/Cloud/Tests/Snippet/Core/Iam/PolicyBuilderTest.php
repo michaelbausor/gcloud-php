@@ -17,7 +17,7 @@
 
 namespace Google\Cloud\Tests\Snippets\Core\Iam;
 
-use Google\Cloud\Dev\Snippet\SnippetTestCase;
+use Google\Cloud\Tests\Snippet\SnippetTestCase;
 use Google\Cloud\Core\Iam\PolicyBuilder;
 
 /**

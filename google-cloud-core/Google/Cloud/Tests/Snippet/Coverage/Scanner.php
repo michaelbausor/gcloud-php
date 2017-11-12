@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev\Snippet\Coverage;
+namespace Google\Cloud\Tests\Snippet\Coverage;
 
-use Google\Cloud\Dev\Snippet\Parser\Parser;
+use Google\Cloud\Tests\Snippet\Parser\Parser;
 use phpDocumentor\Reflection\FileReflector;
 
 /**

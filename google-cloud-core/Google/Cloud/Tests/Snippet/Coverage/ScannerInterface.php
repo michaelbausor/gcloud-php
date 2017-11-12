@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev\Snippet\Coverage;
+namespace Google\Cloud\Tests\Snippet\Coverage;
 
 interface ScannerInterface
 {
@@ -36,7 +36,7 @@ interface ScannerInterface
     /**
      * Get a list of all snippets from the given classes.
      *
-     * @return \Google\Cloud\Dev\Snippet\Parser\Snippet[]
+     * @return \Google\Cloud\Tests\Snippet\Parser\Snippet[]
      */
     public function snippets(array $classes);
 }

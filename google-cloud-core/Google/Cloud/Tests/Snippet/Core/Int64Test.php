@@ -17,7 +17,7 @@
 
 namespace Google\Cloud\Tests\Snippets;
 
-use Google\Cloud\Dev\Snippet\SnippetTestCase;
+use Google\Cloud\Tests\Snippet\SnippetTestCase;
 use Google\Cloud\Core\Int64;
 
 /**

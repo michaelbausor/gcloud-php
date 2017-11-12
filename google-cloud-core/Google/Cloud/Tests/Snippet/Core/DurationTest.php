@@ -18,7 +18,7 @@
 namespace Google\Cloud\Tests\Snippets;
 
 use Google\Cloud\Core\Duration;
-use Google\Cloud\Dev\Snippet\SnippetTestCase;
+use Google\Cloud\Tests\Snippet\SnippetTestCase;
 
 /**
  * @group core

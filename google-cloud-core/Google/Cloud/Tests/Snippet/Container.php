@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev\Snippet;
+namespace Google\Cloud\Tests\Snippet;
 
 class Container
 {
