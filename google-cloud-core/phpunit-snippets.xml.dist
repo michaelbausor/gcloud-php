@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./Google/Cloud/Tests/bootstrap-snippets.php" colors="true">
+  <testsuites>
+    <testsuite>
+      <directory>Google/Cloud/Tests/Snippet</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

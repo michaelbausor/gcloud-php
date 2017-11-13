@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Cloud\Dev;
+namespace Google\Cloud\Tests;
 
 trait StubTrait
 {

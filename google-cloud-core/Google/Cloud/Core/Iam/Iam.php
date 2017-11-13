@@ -32,12 +32,12 @@ namespace Google\Cloud\Core\Iam;
  * // In this example, we'll use PubSub topics to demonstrate
  * // how IAM politices are managed.
  *
- * use Google\Cloud\PubSub\PubSubClient;
+ * //use Google\Cloud\PubSub\PubSubClient;
  *
- * $pubsub = new PubSubClient();
- * $topic = $pubsub->topic('my-new-topic');
+ * //$pubsub = new PubSubClient();
+ * //$topic = $pubsub->topic('my-new-topic');
  *
- * $iam = $topic->iam();
+ * //$iam = $topic->iam();
  * ```
  */
 class Iam
