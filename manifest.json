@@ -93,6 +93,14 @@
             ]
         },
         {
+            "id": "cloud-bigquerydatatransfer",
+            "name": "google/cloud-bigquerydatatransfer",
+            "defaultService": "datatransfer/readme",
+            "versions": [
+                "master"
+            ]
+        },
+        {
             "id": "cloud-bigtable",
             "name": "google/cloud-bigtable",
             "defaultService": "bigtable/readme",
