@@ -105,7 +105,7 @@ class VideoIntelligenceServiceGapicClient
     /**
      * The default address of the service.
      */
-    const SERVICE_ADDRESS = 'videointelligence.googleapis.com';
+    const SERVICE_ADDRESS = 'videointelligence.googleapis.com:443';
 
     /**
      * The name of the code generator, to be included in the agent header.
