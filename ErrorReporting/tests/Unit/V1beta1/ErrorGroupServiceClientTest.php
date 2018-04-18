@@ -22,46 +22,42 @@
 
 namespace Google\Cloud\Tests\Unit\ErrorReporting\V1beta1;
 
+use Google\ApiCore\Call;
+use Google\ApiCore\Transport\TransportInterface;
 use Google\Cloud\ErrorReporting\V1beta1\ErrorGroupServiceClient;
 use Google\ApiCore\ApiException;
-use Google\ApiCore\Testing\GeneratedTest;
 use Google\ApiCore\Testing\MockTransport;
 use Google\Cloud\ErrorReporting\V1beta1\ErrorGroup;
-use Google\Protobuf\Any;
+use Google\Cloud\ErrorReporting\V1beta1\GetGroupRequest;
+use Google\Cloud\ErrorReporting\V1beta1\UpdateGroupRequest;
 use Grpc;
+use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\RejectedPromise;
+use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use stdClass;
 
 /**
  * @group error_reporting
  * @group grpc
  */
-class ErrorGroupServiceClientTest extends GeneratedTest
+class ErrorGroupServiceClientTest extends TestCase
 {
-    /**
-     * @return TransportInterface
-     */
-    private function createTransport($deserialize = null)
+    public function testGetGroup()
     {
-        return new MockTransport($deserialize);
-    }
+        $transport = $this->prophesize(TransportInterface::class);
 
-    /**
-     * @return ErrorGroupServiceClient
-     */
-    private function createClient(array $options = [])
-    {
-        return new ErrorGroupServiceClient($options);
-    }
+        $client = new ErrorGroupServiceClient(['transport' => $transport->reveal()]);
 
-    /**
-     * @test
-     */
-    public function getGroupTest()
-    {
-        $transport = $this->createTransport();
-        $client = $this->createClient(['transport' => $transport]);
+        $formattedGroupName = $client->groupName('[PROJECT]', '[GROUP]');
+        $expectedRequest = new GetGroupRequest();
+        $expectedRequest->setGroupName($formattedGroupName);
 
-        $this->assertTrue($transport->isExhausted());
+        $expectedCall = new Call(
+            'google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/GetGroup',
+            ErrorGroup::class,
+            $expectedRequest
+        );
 
         // Mock response
         $name = 'name3373707';
@@ -69,74 +65,70 @@ class ErrorGroupServiceClientTest extends GeneratedTest
         $expectedResponse = new ErrorGroup();
         $expectedResponse->setName($name);
         $expectedResponse->setGroupId($groupId);
-        $transport->addResponse($expectedResponse);
 
-        // Mock request
-        $formattedGroupName = $client->groupName('[PROJECT]', '[GROUP]');
+        $transport->startUnaryCall(
+            $expectedCall,
+            Argument::allOf(
+                Argument::withEntry('timeoutMillis', Argument::type('int')),
+                Argument::withEntry('headers', Argument::withKey('x-goog-api-client'))
+            )
+        )->willReturn(new FulfilledPromise($expectedResponse));
 
         $response = $client->getGroup($formattedGroupName);
+
         $this->assertEquals($expectedResponse, $response);
-        $actualRequests = $transport->popReceivedCalls();
-        $this->assertSame(1, count($actualRequests));
-        $actualFuncCall = $actualRequests[0]->getFuncCall();
-        $actualRequestObject = $actualRequests[0]->getRequestObject();
-        $this->assertSame('/google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/GetGroup', $actualFuncCall);
-
-        $actualValue = $actualRequestObject->getGroupName();
-
-        $this->assertProtobufEquals($formattedGroupName, $actualValue);
-
-        $this->assertTrue($transport->isExhausted());
     }
 
     /**
-     * @test
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessageRegExp /{\s+"message":\s+"internal error",\s+"code": 15,\s+"status": "DATA_LOSS",\s+"details": \[\]\s+}/
      */
-    public function getGroupExceptionTest()
+    public function testGetGroupException()
     {
-        $transport = $this->createTransport();
-        $client = $this->createClient(['transport' => $transport]);
+        $transport = $this->prophesize(TransportInterface::class);
 
-        $this->assertTrue($transport->isExhausted());
+        $client = new ErrorGroupServiceClient(['transport' => $transport->reveal()]);
+
+        $formattedGroupName = $client->groupName('[PROJECT]', '[GROUP]');
+        $expectedRequest = new GetGroupRequest();
+        $expectedRequest->setGroupName($formattedGroupName);
+
+        $expectedCall = new Call(
+            'google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/GetGroup',
+            ErrorGroup::class,
+            $expectedRequest
+        );
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
         $status->details = 'internal error';
 
-        $expectedExceptionMessage = json_encode([
-           'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
-           'status' => 'DATA_LOSS',
-           'details' => [],
-        ], JSON_PRETTY_PRINT);
-        $transport->addResponse(null, $status);
+        $transport->startUnaryCall(
+            $expectedCall,
+            Argument::allOf(
+                Argument::withEntry('timeoutMillis', Argument::type('int')),
+                Argument::withEntry('headers', Argument::withKey('x-goog-api-client'))
+            )
+        )->willReturn(new RejectedPromise(ApiException::createFromStdClass($status)));
 
-        // Mock request
-        $formattedGroupName = $client->groupName('[PROJECT]', '[GROUP]');
-
-        try {
-            $client->getGroup($formattedGroupName);
-            // If the $client method call did not throw, fail the test
-            $this->fail('Expected an ApiException, but no exception was thrown.');
-        } catch (ApiException $ex) {
-            $this->assertEquals($status->code, $ex->getCode());
-            $this->assertEquals($expectedExceptionMessage, $ex->getMessage());
-        }
-
-        // Call popReceivedCalls to ensure the stub is exhausted
-        $transport->popReceivedCalls();
-        $this->assertTrue($transport->isExhausted());
+        $client->getGroup($formattedGroupName);
     }
 
-    /**
-     * @test
-     */
-    public function updateGroupTest()
+    public function testUpdateGroup()
     {
-        $transport = $this->createTransport();
-        $client = $this->createClient(['transport' => $transport]);
+        $transport = $this->prophesize(TransportInterface::class);
 
-        $this->assertTrue($transport->isExhausted());
+        $client = new ErrorGroupServiceClient(['transport' => $transport->reveal()]);
+
+        $group = new ErrorGroup();
+        $expectedRequest = new UpdateGroupRequest();
+        $expectedRequest->setGroup($group);
+
+        $expectedCall = new Call(
+            'google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/UpdateGroup',
+            ErrorGroup::class,
+            $expectedRequest
+        );
 
         // Mock response
         $name = 'name3373707';
@@ -144,62 +136,52 @@ class ErrorGroupServiceClientTest extends GeneratedTest
         $expectedResponse = new ErrorGroup();
         $expectedResponse->setName($name);
         $expectedResponse->setGroupId($groupId);
-        $transport->addResponse($expectedResponse);
 
-        // Mock request
-        $group = new ErrorGroup();
+        $transport->startUnaryCall(
+            $expectedCall,
+            Argument::allOf(
+                Argument::withEntry('timeoutMillis', Argument::type('int')),
+                Argument::withEntry('headers', Argument::withKey('x-goog-api-client'))
+            )
+        )->willReturn(new FulfilledPromise($expectedResponse));
 
         $response = $client->updateGroup($group);
+
         $this->assertEquals($expectedResponse, $response);
-        $actualRequests = $transport->popReceivedCalls();
-        $this->assertSame(1, count($actualRequests));
-        $actualFuncCall = $actualRequests[0]->getFuncCall();
-        $actualRequestObject = $actualRequests[0]->getRequestObject();
-        $this->assertSame('/google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/UpdateGroup', $actualFuncCall);
-
-        $actualValue = $actualRequestObject->getGroup();
-
-        $this->assertProtobufEquals($group, $actualValue);
-
-        $this->assertTrue($transport->isExhausted());
     }
 
     /**
-     * @test
+     * @expectedException \Google\ApiCore\ApiException
+     * @expectedExceptionMessageRegExp /{\s+"message":\s+"internal error",\s+"code": 15,\s+"status": "DATA_LOSS",\s+"details": \[\]\s+}/
      */
-    public function updateGroupExceptionTest()
+    public function testUpdateGroupException()
     {
-        $transport = $this->createTransport();
-        $client = $this->createClient(['transport' => $transport]);
+        $transport = $this->prophesize(TransportInterface::class);
 
-        $this->assertTrue($transport->isExhausted());
+        $client = new ErrorGroupServiceClient(['transport' => $transport->reveal()]);
+
+        $group = new ErrorGroup();
+        $expectedRequest = new UpdateGroupRequest();
+        $expectedRequest->setGroup($group);
+
+        $expectedCall = new Call(
+            'google.devtools.clouderrorreporting.v1beta1.ErrorGroupService/UpdateGroup',
+            ErrorGroup::class,
+            $expectedRequest
+        );
 
         $status = new stdClass();
         $status->code = Grpc\STATUS_DATA_LOSS;
         $status->details = 'internal error';
 
-        $expectedExceptionMessage = json_encode([
-           'message' => 'internal error',
-           'code' => Grpc\STATUS_DATA_LOSS,
-           'status' => 'DATA_LOSS',
-           'details' => [],
-        ], JSON_PRETTY_PRINT);
-        $transport->addResponse(null, $status);
+        $transport->startUnaryCall(
+            $expectedCall,
+            Argument::allOf(
+                Argument::withEntry('timeoutMillis', Argument::type('int')),
+                Argument::withEntry('headers', Argument::withKey('x-goog-api-client'))
+            )
+        )->willReturn(new RejectedPromise(ApiException::createFromStdClass($status)));
 
-        // Mock request
-        $group = new ErrorGroup();
-
-        try {
-            $client->updateGroup($group);
-            // If the $client method call did not throw, fail the test
-            $this->fail('Expected an ApiException, but no exception was thrown.');
-        } catch (ApiException $ex) {
-            $this->assertEquals($status->code, $ex->getCode());
-            $this->assertEquals($expectedExceptionMessage, $ex->getMessage());
-        }
-
-        // Call popReceivedCalls to ensure the stub is exhausted
-        $transport->popReceivedCalls();
-        $this->assertTrue($transport->isExhausted());
+        $client->updateGroup($group);
     }
 }
