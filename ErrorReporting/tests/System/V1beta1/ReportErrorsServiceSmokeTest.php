@@ -22,18 +22,19 @@
 
 namespace Google\Cloud\Tests\System\ErrorReporting\V1beta1;
 
+use Google\Cloud\ErrorReporting\V1beta1\ReportErrorEventResponse;
 use Google\Cloud\ErrorReporting\V1beta1\ReportErrorsServiceClient;
-use Google\ApiCore\Testing\GeneratedTest;
 use Google\Cloud\ErrorReporting\V1beta1\ErrorContext;
 use Google\Cloud\ErrorReporting\V1beta1\ReportedErrorEvent;
 use Google\Cloud\ErrorReporting\V1beta1\ServiceContext;
 use Google\Cloud\ErrorReporting\V1beta1\SourceLocation;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group error_reporting
  * @group grpc
  */
-class ReportErrorsServiceSmokeTest extends GeneratedTest
+class ReportErrorsServiceSmokeTest extends TestCase
 {
     /**
      * @test
@@ -64,6 +65,8 @@ class ReportErrorsServiceSmokeTest extends GeneratedTest
         $event->setMessage($message);
         $event->setServiceContext($serviceContext);
         $event->setContext($context);
-        $reportErrorsServiceClient->reportErrorEvent($formattedProjectName, $event);
+        $response = $reportErrorsServiceClient->reportErrorEvent($formattedProjectName, $event);
+
+        $this->assertInstanceOf(ReportErrorEventResponse::class, $response);
     }
 }
