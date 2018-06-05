@@ -168,14 +168,195 @@ function post_regenerate() {
   update_copyright 2018 "${FOLDERS_2018[@]}"
 }
 
-function regenerate_container_v1() {
-  regenerate_api "google/container/artman_container.yaml" "google-cloud-container-v1" "Container" "GPBMetadata/Google/Container"
-}
+function regenerate_bigtable_v2() {
 
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/bigtable/admin/artman_bigtableadmin.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-bigtable-admin-v2"
+  #API_ARTMAN_YAML="google/bigtable/admin/artman_bigtableadmin.yaml"
+  #API_ARTMAN_OUTPUT_DIR="google-cloud-bigtable-admin-v2"
+  #API_GCP_FOLDER_NAME="Bigtable"
+
+  API_ARTMAN_YAML="google/bigtable/artman_bigtable.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-bigtable-v2"
   API_GCP_FOLDER_NAME="Bigtable"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Bigtable"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_bqdt_v1() {
+  API_ARTMAN_YAML="google/cloud/bigquery/datatransfer/artman_bigquerydatatransfer.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-bigquerydatatransfer-v1"
+  API_GCP_FOLDER_NAME="BigQueryDataTransfer"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_container_v1() {
+  API_ARTMAN_YAML="google/container/artman_container.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-container-v1"
+  API_GCP_FOLDER_NAME="Container"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Container"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_dataproc_v1() {
+  API_ARTMAN_YAML="google/cloud/dataproc/artman_dataproc_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-dataproc-v1"
+  API_GCP_FOLDER_NAME="Dataproc"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_debugger_v2() {
+  API_ARTMAN_YAML="google/devtools/artman_clouddebugger.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-debugger-v2"
+  API_GCP_FOLDER_NAME="Debugger"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Devtools/Clouddebugger"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_dialogflow_v2() {
+  API_ARTMAN_YAML="google/cloud/dialogflow/artman_dialogflow_v2.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-dialogflow-v2"
+  API_GCP_FOLDER_NAME="Dialogflow"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_dlp_v2() {
+  API_ARTMAN_YAML="google/privacy/dlp/artman_dlp_v2.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-dlp-v2"
+  API_GCP_FOLDER_NAME="Dlp"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Privacy/Dlp"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_errorreporting_v1beta1() {
+  API_ARTMAN_YAML="google/devtools/clouderrorreporting/artman_errorreporting.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-error-reporting-v1beta1"
+  API_GCP_FOLDER_NAME="ErrorReporting"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Devtools/Clouderrorreporting"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_firestore_v1beta1() {
+  API_ARTMAN_YAML="google/firestore/artman_firestore.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-firestore-v1beta1"
+  API_GCP_FOLDER_NAME="Firestore"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Firestore"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_iot_v1() {
+  API_ARTMAN_YAML="google/cloud/iot/artman_cloudiot.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-iot-v1"
+  API_GCP_FOLDER_NAME="Iot"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_language_v1() {
+  API_ARTMAN_YAML="google/cloud/language/artman_language_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-language-v1"
+  API_GCP_FOLDER_NAME="Language"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_language_v1beta2() {
+  API_ARTMAN_YAML="google/cloud/language/artman_language_v1beta2.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-language-v1beta2"
+  API_GCP_FOLDER_NAME="Language"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_logging_v2() {
+  API_ARTMAN_YAML="google/logging/artman_logging.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-logging-v2"
+  API_GCP_FOLDER_NAME="Logging"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_monitoring_v3() {
+  API_ARTMAN_YAML="google/monitoring/artman_monitoring.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-monitoring-v3"
+  API_GCP_FOLDER_NAME="Monitoring"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Monitoring"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_oslogin_v1beta() {
+  API_ARTMAN_YAML="google/cloud/oslogin/artman_oslogin_v1beta.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-os-login-v1beta"
+  API_GCP_FOLDER_NAME="OsLogin"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_pubsub_v1() {
+  API_ARTMAN_YAML="google/pubsub/artman_pubsub.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-pubsub-v1"
+  API_GCP_FOLDER_NAME="PubSub"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Pubsub"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_redis_v1beta1() {
+API_ARTMAN_YAML="google/cloud/redis/artman_redis_v1beta1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-redis-v1beta1"
+  API_GCP_FOLDER_NAME="Redis"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_spanner_v1() {
+  ARTMAN_YAML="google/spanner/admin/database/artman_spanner_admin_database.yaml"
+  ARTMAN_OUTPUT_DIR="google-cloud-spanner-admin-database-v1"
+  GCP_FOLDER_NAME="Spanner/src/Admin/Database"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Spanner"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_speech_v1() {
+  API_ARTMAN_YAML="google/cloud/speech/artman_speech_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-speech-v1"
+  API_GCP_FOLDER_NAME="Speech"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_speech_v1beta1() {
+  API_ARTMAN_YAML="google/cloud/speech/artman_speech_v1beta1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-speech-v1beta1"
+  API_GCP_FOLDER_NAME="Speech"
+  API_METADATA_NAMESPACE_DIR=""
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_speech_v1p1beta1() {
+  API_ARTMAN_YAML="google/cloud/speech/artman_speech_v1p1beta1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-speech-v1p1beta1"
+  API_GCP_FOLDER_NAME="Speech"
   API_METADATA_NAMESPACE_DIR=""
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
@@ -190,136 +371,46 @@ function regenerate_tasks_v2beta2() {
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
 }
 
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
+function regenerate_trace_v2() {
+  API_ARTMAN_YAML="google/devtools/cloudtrace/artman_cloudtrace_v2.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-trace-v2"
+  API_GCP_FOLDER_NAME="Trace"
+  API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Devtools/Cloudtrace"
+
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
+}
+
+function regenerate_tts_v1() {
+  API_ARTMAN_YAML="google/cloud/texttospeech/artman_texttospeech_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-texttospeech-v1"
+  API_GCP_FOLDER_NAME="TextToSpeech"
   API_METADATA_NAMESPACE_DIR=""
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
 }
 
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
+function regenerate_video_v1() {
+  API_ARTMAN_YAML="google/cloud/videointelligence/artman_videointelligence_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-video-intelligence-v1"
+  API_GCP_FOLDER_NAME="VideoIntelligence"
   API_METADATA_NAMESPACE_DIR=""
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
 }
 
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
+function regenerate_video_v1beta2() {
+  API_ARTMAN_YAML="google/cloud/videointelligence/artman_videointelligence_v1beta2.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-video-intelligence-v1beta2"
+  API_GCP_FOLDER_NAME="VideoIntelligence"
   API_METADATA_NAMESPACE_DIR=""
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
 }
 
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
-  API_METADATA_NAMESPACE_DIR=""
-
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
-}
-
-function regenerate_tasks_v2beta2() {
-  API_ARTMAN_YAML="google/cloud/tasks/artman_cloudtasks.yaml"
-  API_ARTMAN_OUTPUT_DIR="google-cloud-cloudtasks-v2beta2"
-  API_GCP_FOLDER_NAME="Tasks"
+function regenerate_vision_v1() {
+  API_ARTMAN_YAML="google/cloud/vision/artman_vision_v1.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-vision-v1"
+  API_GCP_FOLDER_NAME="Vision"
   API_METADATA_NAMESPACE_DIR=""
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_METADATA_NAMESPACE_DIR"
