@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+. /usr/local/google/home/michaelbausor/dev/veneer/regeneration-php-local/set-env.sh
+
+ARTMAN_YAML="google/spanner/admin/database/artman_spanner_admin_database.yaml"
+ARTMAN_OUTPUT_DIR="google-cloud-spanner-admin-database-v1"
+GCP_FOLDER_NAME="Spanner/src/Admin/Database"
+GOOGLE_CLOUD_PHP_SRC="."
+
+. $REGEN_DIR/regenerate-single.sh

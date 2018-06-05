@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ./dev/sh/gapic-generation-functions.sh
+
+setup_environment
+
+regenerate_container_v1
+
+#regenerate_api "google/cloud/redis/artman_redis_v1beta1.yaml" "google-cloud-redis-v1beta1" "Redis"
+
+post_regenerate

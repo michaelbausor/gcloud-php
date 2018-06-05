@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+. /usr/local/google/home/michaelbausor/dev/veneer/regeneration-php-local/set-env.sh
+
+API_ARTMAN_YAML="google/cloud/speech/artman_speech_v1beta1.yaml"
+API_ARTMAN_OUTPUT_DIR="google-cloud-speech-v1beta1"
+API_GCP_FOLDER_NAME="Speech"
+
+. $REGEN_DIR/regenerate-single.sh
+
+source ./dev/sh/gapic-generation-functions.sh
+setup_environment
+regenerate_container_v1
+post_regenerate
+
+function regenerate_speech_v1beta1() {
+  regenerate_api "google/container/artman_container.yaml" "google-cloud-container-v1" "Container" "GPBMetadata/Google/Container"
+}
