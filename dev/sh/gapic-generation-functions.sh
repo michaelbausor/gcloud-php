@@ -179,13 +179,14 @@ function regenerate_bigtable_v2() {
   API_NAMESPACE_DIR=""
   API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Bigtable"
 
-  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_NAMESPACE_DIR" "$API_METADATA_NAMESPACE_DIR"
+  #regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_NAMESPACE_DIR" "$API_METADATA_NAMESPACE_DIR"
 
   ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR="$ARTMAN_OUTPUT_DIR/php/google-cloud-bigtable-admin-v2"
   GOOGLE_CLOUD_PHP_API_DIR="$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
 
   run_artman "$GOOGLEAPIS_DIR/google/bigtable/admin/artman_bigtableadmin.yaml"
-  merge_proto_into_src $ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR "Google/Cloud/Bigtable/Admin" "GPBMetadata/Google/Bigtable/Admin"
+  restructure_generated_package $ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR "Admin"
+  merge_proto_into_src $ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR "Google/Cloud/Bigtable" "GPBMetadata/Google/Bigtable"
   copy_artman_output_to_google_cloud_php $ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR "$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
 }
 
