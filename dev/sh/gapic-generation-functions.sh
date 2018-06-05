@@ -179,7 +179,7 @@ function regenerate_bigtable_v2() {
   API_NAMESPACE_DIR=""
   API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Bigtable"
 
-  #regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_NAMESPACE_DIR" "$API_METADATA_NAMESPACE_DIR"
+  regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_NAMESPACE_DIR" "$API_METADATA_NAMESPACE_DIR"
 
   ABSOLUTE_ADMIN_API_ARTMAN_OUTPUT_DIR="$ARTMAN_OUTPUT_DIR/php/google-cloud-bigtable-admin-v2"
   GOOGLE_CLOUD_PHP_API_DIR="$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
@@ -341,7 +341,7 @@ function regenerate_pubsub_v1() {
 }
 
 function regenerate_redis_v1beta1() {
-API_ARTMAN_YAML="google/cloud/redis/artman_redis_v1beta1.yaml"
+  API_ARTMAN_YAML="google/cloud/redis/artman_redis_v1beta1.yaml"
   API_ARTMAN_OUTPUT_DIR="google-cloud-redis-v1beta1"
   API_GCP_FOLDER_NAME="Redis"
   API_NAMESPACE_DIR=""
@@ -351,13 +351,28 @@ API_ARTMAN_YAML="google/cloud/redis/artman_redis_v1beta1.yaml"
 }
 
 function regenerate_spanner_v1() {
-  ARTMAN_YAML="google/spanner/admin/database/artman_spanner_admin_database.yaml"
-  ARTMAN_OUTPUT_DIR="google-cloud-spanner-admin-database-v1"
-  GCP_FOLDER_NAME="Spanner/src/Admin/Database"
+
+  API_ARTMAN_YAML="google/spanner/artman_spanner.yaml"
+  API_ARTMAN_OUTPUT_DIR="google-cloud-spanner-v1"
+  API_GCP_FOLDER_NAME="Spanner"
   API_NAMESPACE_DIR=""
   API_METADATA_NAMESPACE_DIR="GPBMetadata/Google/Spanner"
 
   regenerate_api "$API_ARTMAN_YAML" "$API_ARTMAN_OUTPUT_DIR" "$API_GCP_FOLDER_NAME" "$API_NAMESPACE_DIR" "$API_METADATA_NAMESPACE_DIR"
+
+  GOOGLE_CLOUD_PHP_API_DIR="$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
+
+  ABSOLUTE_DATABASE_API_ARTMAN_OUTPUT_DIR="$ARTMAN_OUTPUT_DIR/php/google-cloud-spanner-admin-database-v1"
+  run_artman "$GOOGLEAPIS_DIR/google/spanner/admin/database/artman_spanner_admin_database.yaml"
+  restructure_generated_package $ABSOLUTE_DATABASE_API_ARTMAN_OUTPUT_DIR "Admin/Database"
+  merge_proto_into_src $ABSOLUTE_DATABASE_API_ARTMAN_OUTPUT_DIR "Google/Cloud/Spanner" "GPBMetadata/Google/Spanner"
+  copy_artman_output_to_google_cloud_php $ABSOLUTE_DATABASE_API_ARTMAN_OUTPUT_DIR "$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
+
+  ABSOLUTE_INSTANCE_API_ARTMAN_OUTPUT_DIR="$ARTMAN_OUTPUT_DIR/php/google-cloud-spanner-admin-instance-v1"
+  run_artman "$GOOGLEAPIS_DIR/google/spanner/admin/instance/artman_spanner_admin_instance.yaml"
+  restructure_generated_package $ABSOLUTE_INSTANCE_API_ARTMAN_OUTPUT_DIR "Admin/Instance"
+  merge_proto_into_src $ABSOLUTE_INSTANCE_API_ARTMAN_OUTPUT_DIR "Google/Cloud/Spanner" "GPBMetadata/Google/Spanner"
+  copy_artman_output_to_google_cloud_php $ABSOLUTE_INSTANCE_API_ARTMAN_OUTPUT_DIR "$GOOGLE_CLOUD_PHP_ROOT_DIR/$API_GCP_FOLDER_NAME"
 }
 
 function regenerate_speech_v1() {
