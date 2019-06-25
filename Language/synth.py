@@ -20,15 +20,14 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
-gapic = gcp.GAPICGenerator()
+gapic = gcp.GAPICCloudBuild()
 
 for version in ['V1', 'V1beta2']:
     lower_version = version.lower()
 
     library = gapic.php_library(
         service='language',
-        version=lower_version,
-        artman_output_name=f'google-cloud-language-{lower_version}')
+        version=lower_version)
 
     # copy all src including partial veneer classes
     s.move(library / 'src')
